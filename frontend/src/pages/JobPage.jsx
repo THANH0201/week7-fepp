@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const JobPage = () => {
+const JobPage = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [job, setJob] = useState(null);
@@ -9,9 +9,15 @@ const JobPage = () => {
   const [error, setError] = useState(null);
 
   const deleteJob = async (id) => {
+    if (!isAuthenticated) return;
+
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     try {
       const res = await fetch(`/api/jobs/${id}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + currentUser?.token
+        }
       });
       if (!res.ok) {
         throw new Error("Failed to delete job");
@@ -42,6 +48,8 @@ const JobPage = () => {
   }, [id]);
 
   const onDeleteClick = (jobId) => {
+    if (!isAuthenticated) return;
+
     const confirm = window.confirm(
       "Are you sure you want to delete this listing?" + jobId
     );
@@ -52,6 +60,8 @@ const JobPage = () => {
   };
 
   const onEditClick = (jobId) => {
+    if (!isAuthenticated) return;
+    
     navigate(`/edit-job/${jobId}`)
   };
 
@@ -69,8 +79,12 @@ const JobPage = () => {
           <p>Company: {job.company.name}</p>
           <p>Email: {job.company.contactEmail}</p>
           <p>Phone: {job.company.contactPhone}</p>
-          <button onClick={() => onDeleteClick(job._id)}>delete</button>
-          <button onClick={() => onEditClick(job._id)}>edit</button>
+          {isAuthenticated && (
+            <>
+              <button onClick={() => onDeleteClick(job._id)}>delete</button>
+              <button onClick={() => onEditClick(job._id)}>edit</button>
+            </>
+          )}
         </>
       )}
     </div>

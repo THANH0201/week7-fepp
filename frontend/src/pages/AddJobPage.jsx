@@ -23,14 +23,15 @@ const AddJobPage = () => {
         contactPhone
       }
     }
-
-    console.log(newJob);
-
+    
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    
     const res = await fetch("/api/jobs", {
       method: "POST",
       body: JSON.stringify(newJob),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + currentUser?.token
       }
     });
     const data = await res.json;
