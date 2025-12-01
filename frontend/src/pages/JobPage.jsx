@@ -51,6 +51,10 @@ const JobPage = () => {
     navigate("/");
   };
 
+  const onEditClick = (jobId) => {
+    navigate(`/edit-job/${jobId}`)
+  };
+
   return (
     <div className="job-preview">
       {loading ? (
@@ -66,6 +70,7 @@ const JobPage = () => {
           <p>Email: {job.company.contactEmail}</p>
           <p>Phone: {job.company.contactPhone}</p>
           <button onClick={() => onDeleteClick(job._id)}>delete</button>
+          <button onClick={() => onEditClick(job._id)}>edit</button>
         </>
       )}
     </div>
