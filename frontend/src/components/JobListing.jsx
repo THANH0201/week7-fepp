@@ -1,10 +1,12 @@
-const JobListing = () => {
+const JobListing = ({ job }) => {
+  const { title, type, description, company } = job;
+  
   return (
     <div className="job-preview">
-      <h2>Job Title</h2>
-      <p>Type: some title</p>
-      <p>Description: some description</p>
-      <p>Company: company xyz</p>
+      <h2>{title}</h2>
+      <p>Type: {type}</p>
+      <p>Description: {description}</p>
+      <p>Company: {company.name} {company.contactEmail} {company.contactPhone}</p>
     </div>
   );
 };
