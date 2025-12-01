@@ -1,5 +1,5 @@
 import useField from "../hooks/useField";
-import useLogin from "../hooks/useSignup";
+import useLogin from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -23,13 +23,13 @@ const Login = () => {
 
   return (
     <div className="create">
-      <h2>Sign Up</h2>
+      <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>
         <label>Email address:</label>
         <input {...email} />
         <label>Password:</label>
         <input {...password} />
-        <button>Sign up</button>
+        <button>Login</button>
       </form>
     </div>
   );
