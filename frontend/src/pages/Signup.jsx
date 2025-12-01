@@ -9,21 +9,26 @@ const Signup = () => {
   const password = useField("password");
   const phoneNumber = useField("text");
   const gender = useField("text");
-  const dateOfBirth = useField("date");
-  const membershipStatus = useField("text");
+  const addressStreet = useField("text");
+  const city = useField("text");
+  const zipcode = useField("text");
 
   const { signup, error } = useSignup("/api/users/signup");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     await signup({
+      name: name.value,
       email: email.value,
       password: password.value,
       name: name.value,
       phone_number: phoneNumber.value,
       gender: gender.value,
-      date_of_birth: dateOfBirth.value,
-      membership_status: membershipStatus.value,
+      address:{
+        street: addressStreet.value,
+        city: city.value,
+        zipCode: zipcode.value
+      }
     });
     if (!error) {
       console.log("success");
@@ -45,10 +50,12 @@ const Signup = () => {
         <input {...phoneNumber} />
         <label>Gender:</label>
         <input {...gender} />
-        <label>Date of Birth:</label>
-        <input {...dateOfBirth} />
-        <label>Membership Status:</label>
-        <input {...membershipStatus} />
+        <label>Address:</label>
+        <input {...addressStreet} />
+        <label>City:</label>
+        <input {...city} />
+        <label>Zipcode:</label>
+        <input {...zipcode} />
         <button>Sign up</button>
       </form>
     </div>
